@@ -38,9 +38,9 @@ unless explicitly requested.
 ## Architecture
 
 ```
-POST /query  →  RagController
+POST /query  →  QueryController
                     ↓
-                RagService.query(naturalLanguage)
+                QueryService.query(naturalLanguage)
                     ↓
                 QueryGenerationChain.invoke()    [LLM call #1: NL → SQL]
                     ↓
@@ -59,29 +59,24 @@ POST /query  →  RagController
 src/
 ├── main.ts
 ├── app.module.ts
-├── rag/
-│   ├── rag.module.ts
-│   ├── rag.controller.ts          POST /query endpoint
-│   ├── rag.service.ts             chain orchestration
-│   ├── chains/
-│   │   ├── query-generation.chain.ts
-│   │   └── response-generation.chain.ts
-│   ├── prompts/
-│   │   ├── query-generation.prompt.ts
-│   │   └── response-generation.prompt.ts
+├── query/
+│   ├── query.module.ts
+│   ├── query.controller.ts          (POST /query — coming in later step)
+│   ├── query.service.ts             (chain orchestration — coming in later step)
+│   ├── chains/                      (coming in later step)
+│   ├── prompts/                     (coming in later step)
 │   ├── validators/
-│   │   └── sql.validator.ts
-│   ├── dto/
-│   │   ├── query-request.dto.ts
-│   │   └── query-response.dto.ts
+│   │   └── sql.validator.ts         (Step 3 — done)
+│   ├── dto/                         (coming in later step)
 │   └── exceptions/
-│       └── unsafe-sql.exception.ts
+│       └── unsafe-sql.exception.ts  (Step 3 — done)
 ├── database/
 │   ├── database.module.ts
-│   ├── database.service.ts        connection + schema introspection
-│   └── seed.ts                    populates SQLite from chinook.db
+│   ├── database.service.ts
+│   └── exceptions/
+│       └── database-connection.exception.ts
 └── config/
-    └── env.validation.ts          validates OPENAI_API_KEY, DB_PATH
+    └── env.validation.ts
 ```
 
 ## Code Conventions
@@ -120,8 +115,8 @@ Never assume structure decisions. Confirm before writing.
 ### File Conventions
 
 - One class per file (with rare pragmatic exceptions like co-located DTOs).
-- File names: kebab-case (`rag.service.ts`, `sql.validator.ts`).
-- Class names: PascalCase (`RagService`, `SqlValidator`).
+- File names: kebab-case (`query.service.ts`, `sql.validator.ts`).
+- Class names: PascalCase (`QueryService`, `SqlValidator`).
 - Test files: colocated, ending in `.spec.ts`.
 
 ## Common Terminology
