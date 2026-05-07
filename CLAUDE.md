@@ -10,7 +10,7 @@ top of the LangChain RAG pattern.
 - **Runtime:** Node.js 20+
 - **Framework:** NestJS 11+
 - **Language:** TypeScript (strict mode)
-- **LLM:** OpenAI gpt-4o-mini via LangChain.js
+- **LLM:** Google Gemini (gemini-2.5-flash-lite) via LangChain.js
 - **Database:** SQLite (better-sqlite3 driver)
 - **Testing:** Jest
 
@@ -25,7 +25,7 @@ top of the LangChain RAG pattern.
 
 - Authentication, authorization, multi-tenancy
 - Rate limiting, request throttling
-- Multiple LLM providers (gpt-4o-mini only)
+- Multiple LLM providers (Gemini only)
 - Multiple database dialects (SQLite only)
 - Streaming responses (synchronous only)
 - Docker, CI/CD pipelines

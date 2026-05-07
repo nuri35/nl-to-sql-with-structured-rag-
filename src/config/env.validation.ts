@@ -1,4 +1,4 @@
-const REQUIRED_ENV_VARS = ['DB_PATH', 'OPENAI_API_KEY'] as const;
+const REQUIRED_ENV_VARS = ['DB_PATH', 'GOOGLE_API_KEY'] as const;
 
 export function validateEnv(): void {
   const missing = REQUIRED_ENV_VARS.filter((key) => !process.env[key]);
