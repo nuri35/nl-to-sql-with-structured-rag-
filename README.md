@@ -96,3 +96,11 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## Database
+
+This project ships with the **Chinook** SQLite database for demonstration purposes — a sample dataset modelling a digital media store (artists, albums, tracks, customers, invoices).
+
+- **Location:** `data/chinook.db`
+- **Configuration:** the path is read from the `DB_PATH` environment variable (see `.env.example`).
+- **Source:** [lerocha/chinook-database](https://github.com/lerocha/chinook-database) — distributed under the MIT license. The file in this repository was downloaded directly from the upstream `master` branch and is unmodified.
