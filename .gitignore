@@ -1,0 +1,22 @@
+# Claude Code
+.claude/settings.local.json
+.claude/cache/
+.claude/logs/
+
+# NestJS standard
+node_modules/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json

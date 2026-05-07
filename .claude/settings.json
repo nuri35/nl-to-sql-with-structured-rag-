@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm run *)",
+      "Bash(git status)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Read(**)",
+      "Write(src/**)",
+      "Write(test/**)",
+      "Write(*.md)",
+      "Write(.env.example)"
+    ],
+    "deny": [
+      "Write(.env)",
+      "Write(node_modules/**)",
+      "Write(dist/**)",
+      "Bash(rm -rf*)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '✓ session ended'"
+          }
+        ]
+      }
+    ]
+  }
+}
