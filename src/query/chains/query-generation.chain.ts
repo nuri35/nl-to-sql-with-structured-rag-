@@ -93,5 +93,4 @@ export class QueryGenerationChain {
     });
   }
 }
-
-// TODO: suan burası okey yarın devam edecegız sql generate edıyor artık validate ile birlikte bı bu retrivel kısmımız phase 1 genel tekrar edecegız yarın..
+// biraz daha ilerledım ama buraya kadar kod ıncelenecek uzerınden gecılecek ok ama takıp ettım zaetn.. aşama 4 ve 5 dekıler genel incelersın tekrar amaclı hem..
