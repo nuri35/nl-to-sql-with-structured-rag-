@@ -1,0 +1,117 @@
+<svg width="100%" viewBox="0 0 680 760" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Structured RAG architecture flow</title>
+<desc>End-to-end pipeline: HTTP request enters NestJS, two LLM calls and a SQLite query produce a natural-language answer.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+<style>
+.title { font: 500 16px sans-serif; fill: #2C2C2A; }
+.subtitle { font: 12px sans-serif; fill: #5F5E5A; }
+.label-th { font: 500 14px sans-serif; }
+.label-ts { font: 12px sans-serif; }
+.arrow { stroke: #888780; stroke-width: 1.5; fill: none; }
+.box-blue { fill: #E6F1FB; stroke: #185FA5; }
+.box-blue text { fill: #0C447C; }
+.box-purple { fill: #EEEDFE; stroke: #534AB7; }
+.box-purple text { fill: #3C3489; }
+.box-teal { fill: #E1F5EE; stroke: #0F6E56; }
+.box-teal text { fill: #085041; }
+.box-gray { fill: #F1EFE8; stroke: #5F5E5A; }
+.box-gray text { fill: #2C2C2A; }
+.inner-box { fill: rgba(255,255,255,0.5); stroke-width: 0.5; }
+</style>
+</defs>
+
+<text class="title" x="340" y="28" text-anchor="middle">Structured RAG · NestJS + LangChain.js + Gemini + SQLite</text>
+<text class="subtitle" x="340" y="46" text-anchor="middle">Natural language in, natural language out</text>
+
+<g class="box-gray">
+<rect x="220" y="70" width="240" height="48" rx="8" stroke-width="0.5"/>
+<text class="label-th" x="340" y="90" text-anchor="middle">Client</text>
+<text class="label-ts" x="340" y="106" text-anchor="middle">POST /api/query</text>
+</g>
+<line x1="340" y1="118" x2="340" y2="138" class="arrow" marker-end="url(#arrow)"/>
+
+<g class="box-blue">
+<rect x="180" y="138" width="320" height="56" rx="8" stroke-width="0.5"/>
+<text class="label-th" x="340" y="160" text-anchor="middle">QueryController</text>
+<text class="label-ts" x="340" y="178" text-anchor="middle">DTO validation · ValidationPipe · delegate</text>
+</g>
+<line x1="340" y1="194" x2="340" y2="214" class="arrow" marker-end="url(#arrow)"/>
+
+<g class="box-blue">
+<rect x="180" y="214" width="320" height="56" rx="8" stroke-width="0.5"/>
+<text class="label-th" x="340" y="236" text-anchor="middle">QueryService · orchestrator</text>
+<text class="label-ts" x="340" y="254" text-anchor="middle">Glues retrieve and generate phases</text>
+</g>
+
+<text class="subtitle" x="340" y="288" text-anchor="middle">Retrieve phase</text>
+<line x1="340" y1="270" x2="340" y2="296" class="arrow" marker-end="url(#arrow)"/>
+
+<g class="box-purple">
+<rect x="60" y="306" width="560" height="156" rx="12" stroke-width="0.5"/>
+<text class="label-th" x="340" y="328" text-anchor="middle">QueryGenerationChain · LCEL pipeline</text>
+
+<rect class="inner-box" x="80" y="346" width="120" height="46" rx="6"/>
+<text class="label-ts" x="140" y="366" text-anchor="middle">Prompt</text>
+<text class="label-ts" x="140" y="382" text-anchor="middle">+ schema partial</text>
+
+<rect class="inner-box" x="216" y="346" width="120" height="46" rx="6"/>
+<text class="label-ts" x="276" y="366" text-anchor="middle">Gemini · LLM 1</text>
+<text class="label-ts" x="276" y="382" text-anchor="middle">NL to SQL</text>
+
+<rect class="inner-box" x="352" y="346" width="120" height="46" rx="6"/>
+<text class="label-ts" x="412" y="366" text-anchor="middle">SqlValidator</text>
+<text class="label-ts" x="412" y="382" text-anchor="middle">SELECT only · LIMIT</text>
+
+<rect class="inner-box" x="488" y="346" width="120" height="46" rx="6"/>
+<text class="label-ts" x="548" y="366" text-anchor="middle">DatabaseService</text>
+<text class="label-ts" x="548" y="382" text-anchor="middle">SQLite read-only</text>
+
+<line x1="200" y1="369" x2="216" y2="369" class="arrow" marker-end="url(#arrow)"/>
+<line x1="336" y1="369" x2="352" y2="369" class="arrow" marker-end="url(#arrow)"/>
+<line x1="472" y1="369" x2="488" y2="369" class="arrow" marker-end="url(#arrow)"/>
+
+<text class="label-ts" x="340" y="426" text-anchor="middle">Output: { sql, rows }</text>
+<text class="label-ts" x="340" y="444" text-anchor="middle">Returned to QueryService</text>
+</g>
+
+<text class="subtitle" x="340" y="486" text-anchor="middle">Augment + generate phase</text>
+<line x1="340" y1="468" x2="340" y2="494" class="arrow" marker-end="url(#arrow)"/>
+
+<g class="box-teal">
+<rect x="60" y="504" width="560" height="140" rx="12" stroke-width="0.5"/>
+<text class="label-th" x="340" y="526" text-anchor="middle">ResponseGenerationChain · LCEL pipeline</text>
+
+<rect class="inner-box" x="100" y="544" width="130" height="46" rx="6"/>
+<text class="label-ts" x="165" y="564" text-anchor="middle">Format rows</text>
+<text class="label-ts" x="165" y="580" text-anchor="middle">JSON.stringify</text>
+
+<rect class="inner-box" x="246" y="544" width="130" height="46" rx="6"/>
+<text class="label-ts" x="311" y="564" text-anchor="middle">Prompt</text>
+<text class="label-ts" x="311" y="580" text-anchor="middle">user_query + data</text>
+
+<rect class="inner-box" x="392" y="544" width="130" height="46" rx="6"/>
+<text class="label-ts" x="457" y="564" text-anchor="middle">Gemini · LLM 2</text>
+<text class="label-ts" x="457" y="580" text-anchor="middle">Friendly answer</text>
+
+<rect class="inner-box" x="540" y="544" width="68" height="46" rx="6"/>
+<text class="label-ts" x="574" y="564" text-anchor="middle">Parser</text>
+<text class="label-ts" x="574" y="580" text-anchor="middle">to string</text>
+
+<line x1="230" y1="567" x2="246" y2="567" class="arrow" marker-end="url(#arrow)"/>
+<line x1="376" y1="567" x2="392" y2="567" class="arrow" marker-end="url(#arrow)"/>
+<line x1="522" y1="567" x2="540" y2="567" class="arrow" marker-end="url(#arrow)"/>
+
+<text class="label-ts" x="340" y="620" text-anchor="middle">Output: natural-language answer</text>
+</g>
+
+<line x1="340" y1="644" x2="340" y2="668" class="arrow" marker-end="url(#arrow)"/>
+
+<g class="box-gray">
+<rect x="200" y="668" width="280" height="64" rx="8" stroke-width="0.5"/>
+<text class="label-th" x="340" y="692" text-anchor="middle">200 OK · JSON response</text>
+<text class="label-ts" x="340" y="712" text-anchor="middle">{ answer, sql, rows }</text>
+</g>
+</svg>
