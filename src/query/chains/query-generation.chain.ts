@@ -93,4 +93,3 @@ export class QueryGenerationChain {
     });
   }
 }
-// biraz daha ilerledım ama buraya kadar kod ıncelenecek uzerınden gecılecek ok ama takıp ettım zaetn.. aşama 4 ve 5 dekıler genel incelersın tekrar amaclı hem..
